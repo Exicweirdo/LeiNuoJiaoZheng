@@ -73,6 +73,7 @@ if __name__ == '__main__':
     data_correct = pd.read_csv('./benzoic_acid.csv')
     Temp_time = interp1d(data_correct['time'], data_correct['dT'], kind='cubic') #interpolation
     # correct
+    #change the range of two linear regression to your linear region before and after combustion
     k1, b1 = linearfitting(data_correct['time'].iloc[4:13].to_list(), data_correct['dT'].iloc[4:13].to_list())[0:2]
     k2, b2 = linearfitting(data_correct['time'].iloc[-10:].to_list(), data_correct['dT'].iloc[-10:].to_list())[0:2]
     func_correct = partial(Renold, curve = Temp_time, line1 = lambda x: k1*x + b1, line2 = lambda x: k2*x +b2, left = data_correct['time'].iloc[4], right = data_correct['time'].iloc[-10])
